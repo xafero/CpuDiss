@@ -1,19 +1,18 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ObjDumper
 {
     internal static class IterTool
     {
-        public static IEnumerable<NumItem> GenerateNum(int count)
+        public static IEnumerable<NumItem> GenerateNum(int count, long min)
         {
-            const int min = 0;
             var max = Math.Pow(2, 8 * count);
-            for (long i = min; i <= max; i++)
+            for (long i = min; i < max; i++)
             {
-                var bytes = BitConverter.GetBytes(i);
-                // var hex = ToHex(bytes);
-                // var id = long.Parse(hex, NumberStyles.HexNumber);
+                var raw = BitConverter.GetBytes(i);
+                var bytes = raw.Take(count).ToArray();
                 var itm = new NumItem(i, bytes);
                 yield return itm;
             }
