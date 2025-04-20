@@ -20,7 +20,7 @@ namespace ObjDumper
             var line1 = lines.Skip(6).FirstOrDefault();
             var parts = line1!.Split(':', 2);
             var rawLine = parts[1].TrimOrNull();
-            var rParts = rawLine.Split("  ", 2);
+            var rParts = rawLine.Split(["  ", " \t"], 2, StringSplitOptions.None);
             var rAddr = rParts[0].TrimOrNull();
             var rText = rParts[1].TrimOrNull();
             var cParts = rText.Split([" ", "\t"], 2,
