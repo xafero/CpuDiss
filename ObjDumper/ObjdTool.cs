@@ -7,9 +7,10 @@ namespace ObjDumper
 {
     internal static class ObjdTool
     {
-        public static void StartSh3(byte[] bytes, IProducerConsumerCollection<ParsedLine> res,
+        public static void StartSh3(byte[] bytes, ConcurrentDictionary<long, ParsedLine> res,
             string dir, long s)
         {
+            if (res.ContainsKey(s)) return;
             var name = Path.Combine(dir, $"sh3_{s:D8}.bin");
             File.WriteAllBytes(name, bytes);
             var info = new ProcessStartInfo
@@ -18,13 +19,14 @@ namespace ObjDumper
                 ArgumentList = { "-D", "-b", "binary", "-m", "sh3", "-z", name }
             };
             var itm = StartAndGet(info);
-            if (itm != null) res.TryAdd(itm);
+            res.TryAdd(itm.I, itm);
             File.Delete(name);
         }
 
-        public static void StartI86(byte[] bytes, IProducerConsumerCollection<ParsedLine> res,
+        public static void StartI86(byte[] bytes, ConcurrentDictionary<long, ParsedLine> res,
             string dir, long s)
         {
+            if (res.ContainsKey(s)) return;
             var name = Path.Combine(dir, $"i86_{s:D8}.bin");
             File.WriteAllBytes(name, bytes);
             var info = new ProcessStartInfo
@@ -33,7 +35,7 @@ namespace ObjDumper
                 ArgumentList = { "-D", "-Mintel,i8086", "-b", "binary", "-m", "i386", "-z", name },
             };
             var itm = StartAndGet(info);
-            if (itm != null) res.TryAdd(itm);
+            res.TryAdd(itm.I, itm);
             File.Delete(name);
         }
     }

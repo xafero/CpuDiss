@@ -14,7 +14,7 @@ namespace ObjDumper
             var tmpDir = Directory.CreateDirectory("tmp").FullName;
             var outDir = Directory.CreateDirectory("out").FullName;
 
-            var linesSh3 = new ConcurrentBag<ParsedLine>();
+            var linesSh3 = new ConcurrentDictionary<long, ParsedLine>();
             Parallel.ForEach(GenerateNum16(), number =>
             {
                 // Execute SH3
@@ -22,7 +22,7 @@ namespace ObjDumper
             });
             Save(linesSh3, "sh3.json", outDir);
 
-            var linesI86 = new ConcurrentBag<ParsedLine>();
+            var linesI86 = new ConcurrentDictionary<long, ParsedLine>();
             Parallel.ForEach(GenerateNum16(), number =>
             {
                 // Execute x86
