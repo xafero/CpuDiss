@@ -12,8 +12,10 @@ namespace ObjDumper
     {
         public static void Save(IEnumerable<ParsedLine> list, string name, string dir)
         {
-            var sort = list.OrderBy(l => l.H.Length)
-                .ThenBy(l => l.H).Distinct().ToArray();
+            var sort = list
+                .OrderBy(l => l.H.Length)
+                .ThenBy(l => l.H).Distinct()
+                .ToArray();
             var json = JsonConvert.SerializeObject(sort, new JsonSerializerSettings
             {
                 Converters = { new StringEnumConverter() },
