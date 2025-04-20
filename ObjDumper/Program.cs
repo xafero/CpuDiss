@@ -1,7 +1,9 @@
 ﻿using System.Collections.Concurrent;
 using System.IO;
 using System.Threading.Tasks;
-using static ObjDumper.Super;
+using static ObjDumper.IterTool;
+using static ObjDumper.JsonTool;
+using static ObjDumper.ObjdTool;
 
 namespace ObjDumper
 {
