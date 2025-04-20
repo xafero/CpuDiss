@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,10 +15,10 @@ namespace ObjDumper
             var tmpDir = Directory.CreateDirectory("tmp").FullName;
             var outDir = Directory.CreateDirectory("out").FullName;
 
-            var linesSh3 = new ConcurrentDictionary<long, ParsedLine>();
-            var linesI86 = new ConcurrentDictionary<long, ParsedLine>();
+            var linesSh3 = Load("sh3.json", outDir);
+            var linesI86 = Load("i86.json", outDir);
 
-            var po = new ParallelOptions { MaxDegreeOfParallelism = 4 };
+            var po = new ParallelOptions { MaxDegreeOfParallelism = 6 };
             var stop = new bool[1];
 
             var sh3T = new Thread(() =>
