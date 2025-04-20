@@ -24,8 +24,8 @@ namespace ObjDumper
             var sh3T = new Thread(() =>
             {
                 // var max = linesSh3.Count == 0 ? 0 : linesSh3.Keys.Max();
-                var numbers = IterTool.GenerateNum(2, linesSh3.Keys).ToArray();
-                Console.WriteLine($"Starting with {numbers.Length} numbers for sh3!");
+                var numbers = IterTool.GenerateNum(2, linesSh3.Keys);
+                // Console.WriteLine($"Starting with {numbers.Length} numbers for sh3!");
                 /*
                 foreach (var number in numbers)
                 {
@@ -45,8 +45,8 @@ namespace ObjDumper
             var x86T = new Thread(() =>
             {
                 // var max = linesI86.Count == 0 ? 0 : linesI86.Keys.Max();
-                var numbers = IterTool.GenerateNum(6, linesI86.Keys).ToArray();
-                Console.WriteLine($"Starting with {numbers.Length} numbers for i86!");
+                var numbers = IterTool.GenerateNum(6, linesI86.Keys);
+                // Console.WriteLine($"Starting with {numbers.Length} numbers for i86!");
                 /*
                 foreach (var number in numbers)
                 {
