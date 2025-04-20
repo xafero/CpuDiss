@@ -23,7 +23,7 @@ namespace ObjDumper
 
         public static IEnumerable<NumItem> GenerateNum16()
         {
-            for (long i = 0; i <= byte.MaxValue; i++)
+            for (long i = 0; i <= ushort.MaxValue; i++)
             {
                 var bytes = BitConverter.GetBytes(i);
                 var hex = ToHex(bytes);
