@@ -7,18 +7,24 @@ namespace ObjDumper
     internal static class IterTool
     {
         public static IEnumerable<NumItem> GenerateNum(int count,
-            ICollection<long> skip = null, long min = 0)
+            ICollection<string> skip = null, long min = 0)
         {
             var max = Math.Pow(2, 8 * count);
-            for (long i = min; i < max; i++)
+            for (long j = min; j < max; j++)
             {
-                if (skip != null && skip.Contains(i))
+                var id = GetId(j);
+                if (skip != null && skip.Contains(id))
                     continue;
-                var raw = BitConverter.GetBytes(i);
+                var raw = BitConverter.GetBytes(j);
                 var bytes = raw.Take(count).ToArray();
-                var itm = new NumItem(i, bytes);
+                var itm = new NumItem(j, bytes);
                 yield return itm;
             }
+        }
+
+        public static string GetId(long j)
+        {
+            return $"{j:D24}";
         }
     }
 }

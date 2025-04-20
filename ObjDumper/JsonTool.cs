@@ -17,21 +17,21 @@ namespace ObjDumper
             Formatting = Formatting.Indented
         };
 
-        public static void Save(IDictionary<long, ParsedLine> dict, string name, string dir)
+        public static void Save(IDictionary<string, ParsedLine> dict, string name, string dir)
         {
-            var sort = new SortedDictionary<long, ParsedLine>(dict);
+            var sort = new SortedDictionary<string, ParsedLine>(dict);
             var json = JsonConvert.SerializeObject(sort, Config);
             var path = Path.Combine(dir, name);
             File.WriteAllText(path, json, Encoding.UTF8);
             Console.WriteLine($"{sort.Count} entries written to {name}!");
         }
 
-        public static ConcurrentDictionary<long, ParsedLine> Load(string name, string dir)
+        public static ConcurrentDictionary<string, ParsedLine> Load(string name, string dir)
         {
             var path = Path.Combine(dir, name);
             var json = File.Exists(path) ? File.ReadAllText(path, Encoding.UTF8) : "{}";
-            var sort = JsonConvert.DeserializeObject<SortedDictionary<long, ParsedLine>>(json, Config);
-            var dict = new ConcurrentDictionary<long, ParsedLine>(sort);
+            var sort = JsonConvert.DeserializeObject<SortedDictionary<string, ParsedLine>>(json, Config);
+            var dict = new ConcurrentDictionary<string, ParsedLine>(sort);
             Console.WriteLine($"{sort.Count} entries read from {name}!");
             return dict;
         }

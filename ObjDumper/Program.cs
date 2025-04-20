@@ -25,7 +25,14 @@ namespace ObjDumper
             {
                 // var max = linesSh3.Count == 0 ? 0 : linesSh3.Keys.Max();
                 var numbers = IterTool.GenerateNum(2, linesSh3.Keys).ToArray();
-                Console.WriteLine($"Starting with {numbers.Length} numbers!");
+                Console.WriteLine($"Starting with {numbers.Length} numbers for sh3!");
+                /*
+                foreach (var number in numbers)
+                {
+                    if (stop[0]) continue;
+                    StartSh3(number.Bytes, linesSh3, tmpDir, number.Index);
+                }
+                */
                 Parallel.ForEach(numbers, po, number =>
                 {
                     if (stop[0]) return;
@@ -39,7 +46,14 @@ namespace ObjDumper
             {
                 // var max = linesI86.Count == 0 ? 0 : linesI86.Keys.Max();
                 var numbers = IterTool.GenerateNum(2, linesI86.Keys).ToArray();
-                Console.WriteLine($"Starting with {numbers.Length} numbers!");
+                Console.WriteLine($"Starting with {numbers.Length} numbers for i86!");
+                /*
+                foreach (var number in numbers)
+                {
+                    if (stop[0]) continue;
+                    StartI86(number.Bytes, linesI86, tmpDir, number.Index);
+                }
+                */
                 Parallel.ForEach(numbers, po, number =>
                 {
                     if (stop[0]) return;
