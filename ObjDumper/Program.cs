@@ -45,7 +45,7 @@ namespace ObjDumper
             var x86T = new Thread(() =>
             {
                 // var max = linesI86.Count == 0 ? 0 : linesI86.Keys.Max();
-                var numbers = IterTool.GenerateNum(2, linesI86.Keys).ToArray();
+                var numbers = IterTool.GenerateNum(3, linesI86.Keys).ToArray();
                 Console.WriteLine($"Starting with {numbers.Length} numbers for i86!");
                 /*
                 foreach (var number in numbers)
