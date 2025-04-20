@@ -18,6 +18,8 @@ namespace ObjDumper
             var std = $"{stdOut}\n{stdErr}".TrimOrNull();
             var lines = std.Split('\n');
             var line1 = lines.Skip(6).FirstOrDefault();
+            if (string.IsNullOrWhiteSpace(line1))
+                return null;
             var parts = line1!.Split(':', 2);
             var rawLine = parts[1].TrimOrNull();
             var rParts = rawLine.Split(["  ", " \t"], 2, StringSplitOptions.None);

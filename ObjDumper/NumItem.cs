@@ -1,7 +1,7 @@
 namespace ObjDumper
 {
     public record NumItem(
-        long Index,
+        string Index,
         byte[] Bytes
     );
 }
