@@ -9,7 +9,9 @@ namespace ObjDumper
         public static IEnumerable<NumItem> GenerateNum(int count,
             ICollection<string> skip = null, long min = 0)
         {
-            var max = Math.Pow(2, 8 * count);
+            var max = (long)Math.Pow(2, 8 * count);
+            if (max == (skip?.Count ?? 0))
+                yield break;
             for (long j = min; j < max; j++)
             {
                 var id = GetId(j);
