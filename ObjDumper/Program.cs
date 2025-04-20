@@ -1,8 +1,8 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using static ObjDumper.IterTool;
 using static ObjDumper.JsonTool;
 using static ObjDumper.ObjdTool;
 
@@ -23,7 +23,9 @@ namespace ObjDumper
 
             var sh3T = new Thread(() =>
             {
-                Parallel.ForEach(GenerateNum16(), po, number =>
+                var numbers = IterTool.GenerateNum(2).ToArray();
+                Console.WriteLine($"Starting with {numbers.Length} numbers!");
+                Parallel.ForEach(numbers, po, number =>
                 {
                     if (stop[0]) return;
                     StartSh3(number.Bytes, linesSh3, tmpDir, number.Index);
@@ -34,7 +36,9 @@ namespace ObjDumper
 
             var x86T = new Thread(() =>
             {
-                Parallel.ForEach(GenerateNum16(), po, number =>
+                var numbers = IterTool.GenerateNum(3).ToArray();
+                Console.WriteLine($"Starting with {numbers.Length} numbers!");
+                Parallel.ForEach(numbers, po, number =>
                 {
                     if (stop[0]) return;
                     StartI86(number.Bytes, linesI86, tmpDir, number.Index);

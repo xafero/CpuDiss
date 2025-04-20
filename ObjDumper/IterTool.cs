@@ -1,44 +1,20 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using static ObjDumper.TextTool;
 
 namespace ObjDumper
 {
     internal static class IterTool
     {
-        public static IEnumerable<NumItem> GenerateNumB3()
+        public static IEnumerable<NumItem> GenerateNum(int count)
         {
-            for (var a = 0; a < byte.MaxValue; a++)
-            for (var b = 0; b < byte.MaxValue; b++)
-            for (var c = 0; c < byte.MaxValue; c++)
-            {
-                byte[] bytes = [(byte)a, (byte)b, (byte)c];
-                var hex = ToHex(bytes);
-                var i = long.Parse(hex, NumberStyles.HexNumber);
-                var itm = new NumItem(i, hex, bytes);
-                yield return itm;
-            }
-        }
-
-        public static IEnumerable<NumItem> GenerateNum16()
-        {
-            for (long i = 0; i <= ushort.MaxValue; i++)
+            const int min = 0;
+            var max = Math.Pow(2, 8 * count);
+            for (long i = min; i <= max; i++)
             {
                 var bytes = BitConverter.GetBytes(i);
-                var hex = ToHex(bytes);
-                var itm = new NumItem(i, hex, bytes);
-                yield return itm;
-            }
-        }
-
-        public static IEnumerable<NumItem> GenerateNum32()
-        {
-            for (long i = 0; i < uint.MaxValue; i++)
-            {
-                var bytes = BitConverter.GetBytes(i);
-                var hex = ToHex(bytes);
-                var itm = new NumItem(i, hex, bytes);
+                // var hex = ToHex(bytes);
+                // var id = long.Parse(hex, NumberStyles.HexNumber);
+                var itm = new NumItem(i, bytes);
                 yield return itm;
             }
         }
