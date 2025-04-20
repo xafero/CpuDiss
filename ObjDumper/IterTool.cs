@@ -8,7 +8,7 @@ namespace ObjDumper
     internal static class IterTool
     {
         public static IEnumerable<NumItem> GenerateNum(int count, ICollection<string> skip,
-            int limit = 10000)
+            int limit = 50_000)
         {
             var rnd = new Random();
             for (var i = 0; i < limit; i++)
