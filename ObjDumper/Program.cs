@@ -23,8 +23,8 @@ namespace ObjDumper
 
             var sh3T = new Thread(() =>
             {
-                var max = linesSh3.Count == 0 ? 0 : linesSh3.Keys.Max();
-                var numbers = IterTool.GenerateNum(2, max).ToArray();
+                // var max = linesSh3.Count == 0 ? 0 : linesSh3.Keys.Max();
+                var numbers = IterTool.GenerateNum(2, linesSh3.Keys).ToArray();
                 Console.WriteLine($"Starting with {numbers.Length} numbers!");
                 Parallel.ForEach(numbers, po, number =>
                 {
@@ -37,8 +37,8 @@ namespace ObjDumper
 
             var x86T = new Thread(() =>
             {
-                var max = linesI86.Count == 0 ? 0 : linesI86.Keys.Max();
-                var numbers = IterTool.GenerateNum(3, max).ToArray();
+                // var max = linesI86.Count == 0 ? 0 : linesI86.Keys.Max();
+                var numbers = IterTool.GenerateNum(2, linesI86.Keys).ToArray();
                 Console.WriteLine($"Starting with {numbers.Length} numbers!");
                 Parallel.ForEach(numbers, po, number =>
                 {
