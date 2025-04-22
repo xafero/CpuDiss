@@ -97,6 +97,11 @@ namespace ObjDumper
             Generate(dir, "add", res, (c, x, y) => c.add(x, y));
             Generate(dir, "and", res, (c, x, y) => c.and(x, y));
             Generate(dir, "call", res, (Assembler c, AssemblerRegister16 x) => c.call(x));
+            Generate(dir, "cbw", res, c => c.cbw());
+            Generate(dir, "clc", res, c => c.clc());
+            Generate(dir, "cld", res, c => c.cld());
+            Generate(dir, "cli", res, c => c.cli());
+            Generate(dir, "cmc", res, c => c.cmc());
 
             JsonTool.Save(dir, "i86.json", res);
         }
