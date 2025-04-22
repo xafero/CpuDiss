@@ -55,6 +55,7 @@ namespace ObjDumper
         {
             var res = new SortedDictionary<string, ParsedLine>();
             Generate(dir, "pushf", res, c => c.pushf());
+            JsonTool.Save(dir, "i86.json", res);
         }
     }
 }
