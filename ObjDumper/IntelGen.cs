@@ -51,10 +51,23 @@ namespace ObjDumper
             StartI86(bytes, res, dir, id);
         }
 
+        private static void Generate(string dir, string id,
+            IDictionary<string, ParsedLine> res, Action<Assembler, byte> action)
+        {
+            for (var i = 0; i <= byte.MaxValue; i++)
+            {
+                var val = i;
+                Generate(dir, $"{id}_{i:X2}", res, c => action(c, (byte)val));
+            }
+        }
+
         public static void Generate(string dir)
         {
             var res = new SortedDictionary<string, ParsedLine>();
-            Generate(dir, "pushf", res, c => c.pushf());
+            Generate(dir, "aaa", res, c => c.aaa());
+            Generate(dir, "aad", res, (c, x) => c.aad(x));
+            Generate(dir, "aam", res, (c, x) => c.aam(x));
+            Generate(dir, "aas", res, c => c.aas());
             JsonTool.Save(dir, "i86.json", res);
         }
     }
