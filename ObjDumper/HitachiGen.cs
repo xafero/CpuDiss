@@ -1,5 +1,4 @@
 using System;
-using Iced.Intel;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -28,9 +27,18 @@ namespace ObjDumper
             File.Delete(name);
         }
 
+        private static void Generate(string dir, int id,
+            IDictionary<string, ParsedLine> res)
+        {
+            var bytes = BitConverter.GetBytes(id);
+            StartSh3(bytes, res, dir, $"{id:X4}");
+        }
+
         public static void Generate(string dir)
         {
-            // TODO
+            var res = new SortedDictionary<string, ParsedLine>();
+            Generate(dir, 90, res);
+            JsonTool.Save(dir, "sh3.json", res);
         }
     }
 }
