@@ -6,6 +6,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Reference Include="Iced">
+      <HintPath>..\lib\Iced.dll</HintPath>
+    </Reference>
+    <Reference Include="IcedFuzzer.Core">
+      <HintPath>..\lib\IcedFuzzer.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="IcedFuzzer">
+      <HintPath>..\lib\IcedFuzzer.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
