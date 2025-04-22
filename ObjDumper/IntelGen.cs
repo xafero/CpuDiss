@@ -51,13 +51,38 @@ namespace ObjDumper
             StartI86(bytes, res, dir, id);
         }
 
-        private static void Generate(string dir, string id,
-            IDictionary<string, ParsedLine> res, Action<Assembler, byte> action)
+        private static void Generate(string dir, string id, IDictionary<string, ParsedLine> res,
+            Action<Assembler, byte> action)
         {
             for (var i = 0; i <= byte.MaxValue; i++)
             {
                 var val = i;
-                Generate(dir, $"{id}_{i:X2}", res, c => action(c, (byte)val));
+                Generate(dir, $"{id}_{val:X2}", res, c => action(c, (byte)val));
+            }
+        }
+
+        private static void Generate(string dir, string id, IDictionary<string, ParsedLine> res,
+            Action<Assembler, AssemblerRegister8, AssemblerRegister8> action)
+        {
+            Register[] reg8 = [Register.AH, Register.BH, Register.CH, Register.DH];
+            foreach (var a in reg8)
+            foreach (var b in reg8)
+            {
+                var val = $"{a}_{b}";
+                Generate(dir, $"{id}_{val}", res, c => action(c,
+                    new AssemblerRegister8(a), new AssemblerRegister8(b)));
+            }
+        }
+
+        private static void Generate(string dir, string id, IDictionary<string, ParsedLine> res,
+            Action<Assembler, AssemblerRegister16> action)
+        {
+            Register[] reg16 = [Register.AX, Register.BX, Register.CX, Register.DX];
+            foreach (var a in reg16)
+            {
+                var val = $"{a}";
+                Generate(dir, $"{id}_{val}", res, c => action(c,
+                    new AssemblerRegister16(a)));
             }
         }
 
@@ -68,6 +93,11 @@ namespace ObjDumper
             Generate(dir, "aad", res, (c, x) => c.aad(x));
             Generate(dir, "aam", res, (c, x) => c.aam(x));
             Generate(dir, "aas", res, c => c.aas());
+            Generate(dir, "adc", res, (c, x, y) => c.adc(x, y));
+            Generate(dir, "add", res, (c, x, y) => c.add(x, y));
+            Generate(dir, "and", res, (c, x, y) => c.and(x, y));
+            Generate(dir, "call", res, (Assembler c, AssemblerRegister16 x) => c.call(x));
+
             JsonTool.Save(dir, "i86.json", res);
         }
     }
