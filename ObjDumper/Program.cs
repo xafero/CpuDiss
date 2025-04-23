@@ -9,10 +9,12 @@ namespace ObjDumper
             var outDir = Directory.CreateDirectory("out").FullName;
 
             var resI = IntelGen.Generate(outDir);
-            SqlMan.Create(resI, SqlMan.x86Allow, outDir, "i86.sql");
+            var linI = SqlMan.Create(resI, SqlMan.x86Allow, outDir, "i86.sql");
 
             var resH = HitachiGen.Generate(outDir);
-            SqlMan.Create(resH, SqlMan.sh3Allow, outDir, "sh3.sql");
+            var linH = SqlMan.Create(resH, SqlMan.sh3Allow, outDir, "sh3.sql");
+
+            SqlLite.WriteOut([linI, linH], outDir, "asm.db3");
         }
     }
 }

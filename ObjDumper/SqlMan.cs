@@ -41,7 +41,7 @@ namespace ObjDumper
             "tst", "tst.b", "xor", "xor.b", "xtrct"
         ];
 
-        public static void Create(IDictionary<string, ParsedLine> dict, string[] allowed,
+        public static List<string> Create(IDictionary<string, ParsedLine> dict, string[] allowed,
             string dir, string name)
         {
             var lbl = Path.GetFileNameWithoutExtension(name).ToUpper();
@@ -55,7 +55,9 @@ namespace ObjDumper
                 " mnemonic TEXT, ",
                 " arguments TEXT ",
                 ");",
-                ""
+                "",
+                $"INSERT INTO {table} (mnemonic, hexcode, arguments, id) ",
+                "VALUES"
             ];
             var groups = dict.Values
                 .Where(d => allowed.Contains(d.C))
@@ -68,16 +70,19 @@ namespace ObjDumper
                 foreach (var j in group)
                 {
                     var arg = j.A.TrimOrNull() is { } ja ? $"'{ja}'" : "NULL";
-                    var sql = $"INSERT INTO {table} (mnemonic, hexcode, arguments, id) "
-                              + $"VALUES ('{j.C}', '{j.H}', {arg}, {j.I});";
+                    var sql = $"  ('{j.C}', '{j.H}', {arg}, {j.I}),";
                     stats.Add(sql);
                 }
             }
             var lines = new List<string>();
             lines.AddRange(header);
             lines.AddRange(stats);
+            lines[^1] = lines[^1].Replace("),", ");");
+
             Console.WriteLine($"Saving {lines.Count} entries for '{name}'!");
             FileTool.Save(dir, name, lines);
+
+            return lines;
         }
     }
 }
