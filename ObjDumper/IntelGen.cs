@@ -3,6 +3,7 @@ using Iced.Intel;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using static Iced.Intel.AssemblerRegisters;
 using static ObjDumper.ProcTool;
 
 namespace ObjDumper
@@ -178,9 +179,9 @@ namespace ObjDumper
             Generate(dir, "jpe", res, c => c.jpe(4));
             Generate(dir, "js", res, c => c.js(5));
             Generate(dir, "lahf", res, c => c.lahf());
-            // Generate16(dir, "lds", res, (c, a) => c.lds(a, NewMo()));
-            // Generate16(dir, "lea", res, (c, a) => c.lea(a, new AssemblerMemoryOperand()));
-            // Generate16(dir, "les", res, (c, a) => c.les(a, new AssemblerMemoryOperand()));
+            Generate16(dir, "lds", res, (c, a) => c.lds(a, __byte_ptr[32]));
+            Generate16(dir, "lea", res, (c, a) => c.lea(a, __byte_ptr[32]));
+            Generate16(dir, "les", res, (c, a) => c.les(a, __byte_ptr[32]));
             Generate(dir, "lodsb", res, c => c.lodsb());
             Generate(dir, "lodsw", res, c => c.lodsw());
             Generate(dir, "loop", res, c => c.loop(38));
@@ -223,7 +224,7 @@ namespace ObjDumper
             Generate16(dir, "xchg", res, (c, a, b) => c.xchg(a, b));
             Generate(dir, "xlatb", res, c => c.xlatb());
             Generate(dir, "xor", res, c => c.xor(ax, 2));
-            // Generate(dir, "bound", res, c => c.bound(ax, new AssemblerMemoryOperand()));
+            Generate(dir, "bound", res, c => c.bound(ax, __byte_ptr[32]));
             Generate(dir, "enter", res, c => c.enter(1, 2));
             Generate(dir, "insb", res, c => c.insb());
             Generate(dir, "insw", res, c => c.insw());
