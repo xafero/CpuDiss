@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Threading.Tasks;
 using static ObjDumper.ProcTool;
 
 namespace ObjDumper
@@ -30,15 +31,22 @@ namespace ObjDumper
         private static void Generate(string dir, int id,
             IDictionary<string, ParsedLine> res)
         {
-            var bytes = BitConverter.GetBytes(id);
-            StartSh3(bytes, res, dir, $"{id:X4}");
+            var bytes = BitConverter.GetBytes((ushort)id);
+            var nr = Convert.ToHexString(bytes);
+            StartSh3(bytes, res, dir, nr);
         }
 
         public static void Generate(string dir)
         {
-            var res = new SortedDictionary<string, ParsedLine>();
-            Generate(dir, 90, res);
-            JsonTool.Save(dir, "sh3.json", res);
+            const string name = "sh3.json";
+            var res = JsonTool.Load<SortedDictionary<string, ParsedLine>>(dir, name);
+            Console.WriteLine($"Loading {res.Count} entries from '{name}'!");
+            for (var i = 0; i < ushort.MaxValue + 1; i++)
+            {
+                Generate(dir, i, res);
+            }
+            Console.WriteLine($"Saving {res.Count} entries for '{name}'!");
+            JsonTool.Save(dir, name, res);
         }
     }
 }
