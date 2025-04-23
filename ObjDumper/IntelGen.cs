@@ -154,7 +154,7 @@ namespace ObjDumper
             Generate(dir, "jnae", res, c => c.jnae(3));
             Generate(dir, "jbe", res, c => c.jbe(2));
             Generate(dir, "jna", res, c => c.jna(1));
-            Generate(dir, "jc", res, c => c.jc(2));
+            Generate(dir, "jc", res, c => c.jc(3));
             Generate(dir, "jcxz", res, c => c.jcxz(3));
             Generate(dir, "je", res, c => c.je(2));
             Generate(dir, "jz", res, c => c.jz(7));
