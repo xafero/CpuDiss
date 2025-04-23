@@ -108,7 +108,7 @@ namespace ObjDumper
             }
         }
 
-        public static void Generate(string dir)
+        public static IDictionary<string, ParsedLine> Generate(string dir)
         {
             const string name = "i86.json";
             var res = JsonTool.Load<SortedDictionary<string, ParsedLine>>(dir, name);
@@ -125,6 +125,7 @@ namespace ObjDumper
             Generate8(dir, "adc", res, (c, x, y) => c.adc(x, y));
             Generate8(dir, "add", res, (c, x, y) => c.add(x, y));
             Generate8(dir, "and", res, (c, x, y) => c.and(x, y));
+            Generate(dir, "bound", res, c => c.bound(ax, __byte_ptr[32]));
             Generate16(dir, "call", res, (c, x) => c.call(x));
             Generate(dir, "cbw", res, c => c.cbw());
             Generate(dir, "clc", res, c => c.clc());
@@ -138,11 +139,14 @@ namespace ObjDumper
             Generate(dir, "das", res, c => c.das());
             Generate16(dir, "dec", res, (c, x) => c.dec(x));
             Generate16(dir, "div", res, (c, x) => c.div(x));
+            Generate(dir, "enter", res, c => c.enter(1, 2));
             Generate(dir, "hlt", res, c => c.hlt());
             Generate16(dir, "idiv", res, (c, x) => c.idiv(x));
             Generate16(dir, "imul", res, (c, x) => c.imul(x));
             Generate(dir, "in", res, (c) => c.@in(ax, 12));
             Generate16(dir, "inc", res, (c, x) => c.inc(x));
+            Generate(dir, "insb", res, c => c.insb());
+            Generate(dir, "insw", res, c => c.insw());
             GenerateB(dir, "int", res, (c, x) => c.@int(x));
             Generate(dir, "into", res, c => c.into());
             Generate(dir, "iret", res, c => c.iret());
@@ -181,6 +185,7 @@ namespace ObjDumper
             Generate(dir, "lahf", res, c => c.lahf());
             Generate16(dir, "lds", res, (c, a) => c.lds(a, __byte_ptr[32]));
             Generate16(dir, "lea", res, (c, a) => c.lea(a, __byte_ptr[32]));
+            Generate(dir, "leave", res, c => c.leave());
             Generate16(dir, "les", res, (c, a) => c.les(a, __byte_ptr[32]));
             Generate(dir, "lodsb", res, c => c.lodsb());
             Generate(dir, "lodsw", res, c => c.lodsw());
@@ -196,9 +201,13 @@ namespace ObjDumper
             Generate16(dir, "not", res, (c, a) => c.not(a));
             Generate16(dir, "or", res, (c, a, b) => c.or(a, b));
             Generate16(dir, "out", res, (c, a) => c.@out(8, ax));
+            Generate(dir, "outsb", res, c => c.outsb());
+            Generate(dir, "outsw", res, c => c.outsw());
             Generate16(dir, "pop", res, (c, a) => c.pop(a));
+            Generate(dir, "popa", res, c => c.popa());
             Generate(dir, "popf", res, c => c.popf());
             Generate16(dir, "push", res, (c, a) => c.push(a));
+            Generate(dir, "pusha", res, c => c.pusha());
             Generate(dir, "pushf", res, c => c.pushf());
             Generate16(dir, "rcl", res, (c, a, b) => c.rcl(ah, cl));
             Generate16(dir, "rcr", res, (c, a, b) => c.rcr(ah, cl));
@@ -224,21 +233,14 @@ namespace ObjDumper
             Generate16(dir, "xchg", res, (c, a, b) => c.xchg(a, b));
             Generate(dir, "xlatb", res, c => c.xlatb());
             Generate(dir, "xor", res, c => c.xor(ax, 2));
-            Generate(dir, "bound", res, c => c.bound(ax, __byte_ptr[32]));
-            Generate(dir, "enter", res, c => c.enter(1, 2));
-            Generate(dir, "insb", res, c => c.insb());
-            Generate(dir, "insw", res, c => c.insw());
-            Generate(dir, "leave", res, c => c.leave());
-            Generate(dir, "outsb", res, c => c.outsb());
-            Generate(dir, "outsw", res, c => c.outsw());
-            Generate(dir, "popa", res, c => c.popa());
-            Generate(dir, "pusha", res, c => c.pusha());
 
             for (var i = 0; i < ushort.MaxValue + 1; i++)
                 Generate(dir, i, res);
 
             Console.WriteLine($"Saving {res.Count} entries for '{name}'!");
             JsonTool.Save(dir, name, res);
+
+            return res;
         }
     }
 }
