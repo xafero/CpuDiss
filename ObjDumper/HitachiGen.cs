@@ -44,7 +44,7 @@ namespace ObjDumper
                 Generate(dir, i, res);
             Console.WriteLine($"Saving {res.Count} entries for '{name}'!");
             JsonTool.Save(dir, name, res);
-            
+
             return res;
         }
     }

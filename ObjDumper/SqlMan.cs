@@ -40,18 +40,41 @@ namespace ObjDumper
             "tst", "tst.b", "xor", "xor.b", "xtrct"
         ];
 
-        public static void Create(IDictionary<string, ParsedLine> dict, string[] allowed)
+        public static void Create(IDictionary<string, ParsedLine> dict, string[] allowed,
+            string dir, string name)
         {
+            string[] header =
+            [
+                "",
+                "CREATE TABLE instructions (",
+                " id INTEGER, ",
+                " hexcode TEXT, ",
+                " mnemonic TEXT, ",
+                " arguments TEXT ",
+                ");",
+                ""
+            ];
             var groups = dict.Values
                 .Where(d => allowed.Contains(d.C))
                 .OrderBy(d => d.C)
                 .GroupBy(d => d.C)
                 .ToArray();
+            var stats = new SortedSet<string>();
             foreach (var group in groups)
             {
-                var key = group.Key;
-                Console.WriteLine(" * " + key);
+                foreach (var j in group)
+                {
+                    var arg = j.A.TrimOrNull() is { } ja ? $"'{ja}'" : "NULL";
+                    var sql = "INSERT INTO instructions (mnemonic, hexcode, arguments, id) "
+                              + $"VALUES ('{j.C}', '{j.H}', {arg}, {j.I});";
+                    stats.Add(sql);
+                }
             }
+            var lines = new List<string>();
+            lines.AddRange(header);
+            lines.AddRange(stats);
+            Console.WriteLine($"Saving {lines.Count} entries for '{name}'!");
+            FileTool.Save(dir, name, lines);
         }
     }
 }
