@@ -42,9 +42,7 @@ namespace ObjDumper
             var res = JsonTool.Load<SortedDictionary<string, ParsedLine>>(dir, name);
             Console.WriteLine($"Loading {res.Count} entries from '{name}'!");
             for (var i = 0; i < ushort.MaxValue + 1; i++)
-            {
                 Generate(dir, i, res);
-            }
             Console.WriteLine($"Saving {res.Count} entries for '{name}'!");
             JsonTool.Save(dir, name, res);
         }

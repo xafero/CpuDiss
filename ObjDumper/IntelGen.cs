@@ -41,6 +41,14 @@ namespace ObjDumper
             File.Delete(name);
         }
 
+        private static void Generate(string dir, int id,
+            IDictionary<string, ParsedLine> res)
+        {
+            var bytes = BitConverter.GetBytes((ushort)id);
+            var nr = Convert.ToHexString(bytes);
+            StartI86(bytes, res, dir, nr);
+        }
+
         private static void Generate(string dir, string id,
             IDictionary<string, ParsedLine> res, Action<Assembler> action)
         {
@@ -220,6 +228,9 @@ namespace ObjDumper
             Generate(dir, "outsw", res, c => c.outsw());
             Generate(dir, "popa", res, c => c.popa());
             Generate(dir, "pusha", res, c => c.pusha());
+            
+            for (var i = 0; i < ushort.MaxValue + 1; i++)
+                Generate(dir, i, res);
             
             Console.WriteLine($"Saving {res.Count} entries for '{name}'!");
             JsonTool.Save(dir, name, res);
