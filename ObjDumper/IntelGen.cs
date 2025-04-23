@@ -113,6 +113,10 @@ namespace ObjDumper
             var res = JsonTool.Load<SortedDictionary<string, ParsedLine>>(dir, name);
             Console.WriteLine($"Loading {res.Count} entries from '{name}'!");
 
+            var cl = new AssemblerRegister8(Register.CL);
+            var ah = new AssemblerRegister8(Register.AH);
+            var ax = new AssemblerRegister16(Register.AX);
+
             Generate(dir, "aaa", res, c => c.aaa());
             GenerateB(dir, "aad", res, (c, x) => c.aad(x));
             GenerateB(dir, "aam", res, (c, x) => c.aam(x));
@@ -136,7 +140,7 @@ namespace ObjDumper
             Generate(dir, "hlt", res, c => c.hlt());
             Generate16(dir, "idiv", res, (c, x) => c.idiv(x));
             Generate16(dir, "imul", res, (c, x) => c.imul(x));
-            Generate(dir, "in", res, (c) => c.@in(new AssemblerRegister16(Register.AX), 12));
+            Generate(dir, "in", res, (c) => c.@in(ax, 12));
             Generate16(dir, "inc", res, (c, x) => c.inc(x));
             GenerateB(dir, "int", res, (c, x) => c.@int(x));
             Generate(dir, "into", res, c => c.into());
@@ -190,24 +194,24 @@ namespace ObjDumper
             Generate(dir, "nop", res, c => c.nop());
             Generate16(dir, "not", res, (c, a) => c.not(a));
             Generate16(dir, "or", res, (c, a, b) => c.or(a, b));
-            Generate16(dir, "out", res, (c, a) => c.@out(8, new AssemblerRegister16(Register.AX)));
+            Generate16(dir, "out", res, (c, a) => c.@out(8, ax));
             Generate16(dir, "pop", res, (c, a) => c.pop(a));
             Generate(dir, "popf", res, c => c.popf());
             Generate16(dir, "push", res, (c, a) => c.push(a));
             Generate(dir, "pushf", res, c => c.pushf());
-            Generate16(dir, "rcl", res, (c, a, b) => c.rcl(new AssemblerRegister8(Register.AH), new AssemblerRegister8(Register.CL)));
-            Generate16(dir, "rcr", res, (c, a, b) => c.rcr(new AssemblerRegister8(Register.AH), new AssemblerRegister8(Register.CL)));
+            Generate16(dir, "rcl", res, (c, a, b) => c.rcl(ah, cl));
+            Generate16(dir, "rcr", res, (c, a, b) => c.rcr(ah, cl));
             Generate(dir, "ret", res, c => c.ret());
-            Generate16(dir, "rol", res, (c, a, b) => c.rol(new AssemblerRegister8(Register.AH), new AssemblerRegister8(Register.CL)));
-            Generate16(dir, "ror", res, (c, a, b) => c.ror(new AssemblerRegister8(Register.AH), new AssemblerRegister8(Register.CL)));
+            Generate16(dir, "rol", res, (c, a, b) => c.rol(ah, cl));
+            Generate16(dir, "ror", res, (c, a, b) => c.ror(ah, cl));
             Generate(dir, "sahf", res, c => c.sahf());
-            Generate16(dir, "sal", res, (c, a, b) => c.sal(new AssemblerRegister8(Register.AH), new AssemblerRegister8(Register.CL)));
-            Generate16(dir, "sar", res, (c, a, b) => c.sar(new AssemblerRegister8(Register.AH), new AssemblerRegister8(Register.CL)));
+            Generate16(dir, "sal", res, (c, a, b) => c.sal(ah, cl));
+            Generate16(dir, "sar", res, (c, a, b) => c.sar(ah, cl));
             Generate16(dir, "sbb", res, (c, a, b) => c.sbb(a, b));
             Generate(dir, "scasb", res, c => c.scasb());
             Generate(dir, "scasw", res, c => c.scasw());
-            Generate16(dir, "shl", res, (c, a, b) => c.shl(new AssemblerRegister8(Register.AH), new AssemblerRegister8(Register.CL)));
-            Generate16(dir, "shr", res, (c, a, b) => c.shr(new AssemblerRegister8(Register.AH), new AssemblerRegister8(Register.CL)));
+            Generate16(dir, "shl", res, (c, a, b) => c.shl(ah, cl));
+            Generate16(dir, "shr", res, (c, a, b) => c.shr(ah, cl));
             Generate(dir, "stc", res, c => c.stc());
             Generate(dir, "std", res, c => c.std());
             Generate(dir, "sti", res, c => c.sti());
@@ -218,8 +222,8 @@ namespace ObjDumper
             Generate(dir, "wait", res, c => c.wait());
             Generate16(dir, "xchg", res, (c, a, b) => c.xchg(a, b));
             Generate(dir, "xlatb", res, c => c.xlatb());
-            Generate(dir, "xor", res, c => c.xor(new AssemblerRegister16(Register.AX), 2));
-            // Generate(dir, "bound", res, c => c.bound(new AssemblerRegister16(Register.AX), new AssemblerMemoryOperand()));
+            Generate(dir, "xor", res, c => c.xor(ax, 2));
+            // Generate(dir, "bound", res, c => c.bound(ax, new AssemblerMemoryOperand()));
             Generate(dir, "enter", res, c => c.enter(1, 2));
             Generate(dir, "insb", res, c => c.insb());
             Generate(dir, "insw", res, c => c.insw());
@@ -228,10 +232,10 @@ namespace ObjDumper
             Generate(dir, "outsw", res, c => c.outsw());
             Generate(dir, "popa", res, c => c.popa());
             Generate(dir, "pusha", res, c => c.pusha());
-            
+
             for (var i = 0; i < ushort.MaxValue + 1; i++)
                 Generate(dir, i, res);
-            
+
             Console.WriteLine($"Saving {res.Count} entries for '{name}'!");
             JsonTool.Save(dir, name, res);
         }
