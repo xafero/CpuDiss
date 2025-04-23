@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace ObjDumper
@@ -43,10 +44,12 @@ namespace ObjDumper
         public static void Create(IDictionary<string, ParsedLine> dict, string[] allowed,
             string dir, string name)
         {
+            var lbl = Path.GetFileNameWithoutExtension(name).ToUpper();
+            var table = $"instructions{lbl}";
             string[] header =
             [
                 "",
-                "CREATE TABLE instructions (",
+                $"CREATE TABLE {table} (",
                 " id INTEGER, ",
                 " hexcode TEXT, ",
                 " mnemonic TEXT, ",
@@ -65,7 +68,7 @@ namespace ObjDumper
                 foreach (var j in group)
                 {
                     var arg = j.A.TrimOrNull() is { } ja ? $"'{ja}'" : "NULL";
-                    var sql = "INSERT INTO instructions (mnemonic, hexcode, arguments, id) "
+                    var sql = $"INSERT INTO {table} (mnemonic, hexcode, arguments, id) "
                               + $"VALUES ('{j.C}', '{j.H}', {arg}, {j.I});";
                     stats.Add(sql);
                 }
