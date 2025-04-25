@@ -40,6 +40,11 @@ namespace ObjDumper.Core
         AND,
 
         /// <summary>
+        /// Check array index against bounds
+        /// </summary>
+        BOUND,
+
+        /// <summary>
         /// Call procedure
         /// </summary>
         CALL,
@@ -110,6 +115,11 @@ namespace ObjDumper.Core
         DIV,
 
         /// <summary>
+        /// Enter stack frame
+        /// </summary>
+        ENTER,
+
+        /// <summary>
         /// Used with floating-point unit
         /// </summary>
         ESC,
@@ -140,6 +150,16 @@ namespace ObjDumper.Core
         INC,
 
         /// <summary>
+        /// Input from port to string
+        /// </summary>
+        INSB,
+
+        /// <summary>
+        /// Input from port to string
+        /// </summary>
+        INSW,
+
+        /// <summary>
         /// Call to interrupt
         /// </summary>
         INT,
@@ -155,45 +175,74 @@ namespace ObjDumper.Core
         IRET,
 
         JA,
+
         JAE,
+
         JB,
+
         JBE,
+
         JC,
-        JE,
-        JG,
-        JGE,
-        JL,
-        JLE,
-        JNA,
-        JNAE,
-        JNB,
-        JNBE,
-        JNC,
-        JNE,
-        JNG,
-        JNGE,
-        JNL,
-        JNLE,
-        JNO,
-        JNP,
-        JNS,
-        JNZ,
-        JO,
-        JP,
-        JPE,
-        JPO,
-        JS,
-        JZ,
 
         /// <summary>
         /// Jump if CX is zero
         /// </summary>
         JCXZ,
 
+        JE,
+
+        JG,
+
+        JGE,
+
+        JL,
+
+        JLE,
+
         /// <summary>
         /// Jump
         /// </summary>
         JMP,
+
+        JNA,
+
+        JNAE,
+
+        JNB,
+
+        JNBE,
+
+        JNC,
+
+        JNE,
+
+        JNG,
+
+        JNGE,
+
+        JNL,
+
+        JNLE,
+
+        JNO,
+
+        JNP,
+
+        JNS,
+
+        JNZ,
+
+        JO,
+
+        JP,
+
+        JPE,
+
+        JPO,
+
+        JS,
+
+        JZ,
 
         /// <summary>
         /// Load FLAGS into AH register
@@ -209,6 +258,11 @@ namespace ObjDumper.Core
         /// Load Effective Address
         /// </summary>
         LEA,
+
+        /// <summary>
+        /// Leave stack frame
+        /// </summary>
+        LEAVE,
 
         /// <summary>
         /// Load ES:r with far pointer
@@ -236,8 +290,11 @@ namespace ObjDumper.Core
         LOOP,
 
         LOOPE,
+
         LOOPNE,
+
         LOOPNZ,
+
         LOOPZ,
 
         /// <summary>
@@ -286,9 +343,24 @@ namespace ObjDumper.Core
         OUT,
 
         /// <summary>
+        /// Output string to port
+        /// </summary>
+        OUTSB,
+
+        /// <summary>
+        /// Output string to port
+        /// </summary>
+        OUTSW,
+
+        /// <summary>
         /// Pop data from stack
         /// </summary>
         POP,
+
+        /// <summary>
+        /// Pop all general purpose registers from stack
+        /// </summary>
+        POPA,
 
         /// <summary>
         /// Pop FLAGS register from stack
@@ -299,6 +371,11 @@ namespace ObjDumper.Core
         /// Push data onto stack
         /// </summary>
         PUSH,
+
+        /// <summary>
+        /// Push all general purpose registers onto stack
+        /// </summary>
+        PUSHA,
 
         /// <summary>
         /// Push FLAGS onto stack
@@ -316,9 +393,13 @@ namespace ObjDumper.Core
         RCR,
 
         REP,
+
         REPE,
+
         REPNE,
+
         REPNZ,
+
         REPZ,
 
         /// <summary>
@@ -327,14 +408,14 @@ namespace ObjDumper.Core
         RET,
 
         /// <summary>
-        /// Return from near procedure
-        /// </summary>
-        RETN,
-
-        /// <summary>
         /// Return from far procedure
         /// </summary>
         RETF,
+
+        /// <summary>
+        /// Return from near procedure
+        /// </summary>
+        RETN,
 
         /// <summary>
         /// Rotate left
@@ -439,61 +520,6 @@ namespace ObjDumper.Core
         /// <summary>
         /// Exclusive Or
         /// </summary>
-        XOR,
-
-        /// <summary>
-        /// Check array index against bounds
-        /// </summary>
-        BOUND,
-
-        /// <summary>
-        /// Enter stack frame
-        /// </summary>
-        ENTER,
-
-        /// <summary>
-        /// Input from port to string
-        /// </summary>
-        INSB,
-
-        /// <summary>
-        /// Input from port to string
-        /// </summary>
-        INSW,
-
-        /// <summary>
-        /// Leave stack frame
-        /// </summary>
-        LEAVE,
-
-        /// <summary>
-        /// Output string to port
-        /// </summary>
-        OUTSB,
-
-        /// <summary>
-        /// Output string to port
-        /// </summary>
-        OUTSW,
-
-        /// <summary>
-        /// Pop all general purpose registers from stack
-        /// </summary>
-        POPA,
-
-        /// <summary>
-        /// Push all general purpose registers onto stack
-        /// </summary>
-        PUSHA,
-
-        /// <summary>
-        /// Push an immediate byte/word value onto the stack
-        /// </summary>
-        PUSH_imm,
-
-        /// <summary>
-        /// Signed and unsigned multiplication of immediate byte/word value
-        /// </summary>
-        IMUL_imm
+        XOR
     }
 }
