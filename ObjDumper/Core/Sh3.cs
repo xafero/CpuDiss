@@ -87,20 +87,44 @@ namespace ObjDumper.Core
         /// </summary>
         CLRT,
 
+        /// <summary>
+        /// Compare Equal
+        /// </summary>
         CMP_EQ,
 
+        /// <summary>
+        /// Compare Greater Than or Equal (Signed)
+        /// </summary>
         CMP_GE,
 
+        /// <summary>
+        /// Compare Greater Than (Signed)
+        /// </summary>
         CMP_GT,
 
+        /// <summary>
+        /// Compare Higher (Unsigned)
+        /// </summary>
         CMP_HI,
 
+        /// <summary>
+        /// Compare Higher or Same (Unsigned)
+        /// </summary>
         CMP_HS,
 
+        /// <summary>
+        /// Compare Plus (Positive)
+        /// </summary>
         CMP_PL,
 
+        /// <summary>
+        /// Compare Plus or Zero
+        /// </summary>
         CMP_PZ,
 
+        /// <summary>
+        /// Compare String
+        /// </summary>
         CMP_STR,
 
         /// <summary>
