@@ -1,5 +1,8 @@
 namespace ObjDumper.Core
 {
+    /// <summary>
+    /// Instructions of the Intel 8086 / 80186
+    /// </summary>
     public enum X86
     {
         None = 0,
