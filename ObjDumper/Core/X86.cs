@@ -178,27 +178,27 @@ namespace ObjDumper.Core
         IRET,
 
         /// <summary>
-        /// Jump if above (unsigned greater than)
+        /// Jump if above
         /// </summary>
         JA,
 
         /// <summary>
-        /// Jump if above or equal (unsigned greater than or equal)
+        /// Jump if above or equal
         /// </summary>
         JAE,
 
         /// <summary>
-        /// Jump if below (unsigned less than)
+        /// Jump if below
         /// </summary>
         JB,
 
         /// <summary>
-        /// Jump if below or equal (unsigned less than or equal)
+        /// Jump if below or equal
         /// </summary>
         JBE,
 
         /// <summary>
-        /// Jump if carry (CF=1)
+        /// Jump if carry
         /// </summary>
         JC,
 
@@ -208,27 +208,27 @@ namespace ObjDumper.Core
         JCXZ,
 
         /// <summary>
-        /// Jump if equal (ZF=1)
+        /// Jump if equal
         /// </summary>
         JE,
 
         /// <summary>
-        /// Jump if greater (signed greater than)
+        /// Jump if greater
         /// </summary>
         JG,
 
         /// <summary>
-        /// Jump if greater or equal (signed greater than or equal)
+        /// Jump if greater or equal
         /// </summary>
         JGE,
 
         /// <summary>
-        /// Jump if less (signed less than)
+        /// Jump if less
         /// </summary>
         JL,
 
         /// <summary>
-        /// Jump if less or equal (signed less than or equal)
+        /// Jump if less or equal
         /// </summary>
         JLE,
 
@@ -238,102 +238,102 @@ namespace ObjDumper.Core
         JMP,
 
         /// <summary>
-        /// Jump if not above (unsigned not greater than)
+        /// Jump if not above
         /// </summary>
         JNA,
 
         /// <summary>
-        /// Jump if not above or equal (unsigned not greater than or equal)
+        /// Jump if not above or equal
         /// </summary>
         JNAE,
 
         /// <summary>
-        /// Jump if not below (unsigned not less than)
+        /// Jump if not below
         /// </summary>
         JNB,
 
         /// <summary>
-        /// Jump if not below or equal (unsigned not less than or equal)
+        /// Jump if not below or equal
         /// </summary>
         JNBE,
 
         /// <summary>
-        /// Jump if not carry (CF=0)
+        /// Jump if not carry
         /// </summary>
         JNC,
 
         /// <summary>
-        /// Jump if not equal (ZF=0)
+        /// Jump if not equal
         /// </summary>
         JNE,
 
         /// <summary>
-        /// Jump if not greater (signed not greater than)
+        /// Jump if not greater
         /// </summary>
         JNG,
 
         /// <summary>
-        /// Jump if not greater or equal (signed not greater than or equal)
+        /// Jump if not greater or equal
         /// </summary>
         JNGE,
 
         /// <summary>
-        /// Jump if not less (signed not less than)
+        /// Jump if not less
         /// </summary>
         JNL,
 
         /// <summary>
-        /// Jump if not less or equal (signed not less than or equal)
+        /// Jump if not less or equal
         /// </summary>
         JNLE,
 
         /// <summary>
-        /// Jump if not overflow (OF=0)
+        /// Jump if not overflow
         /// </summary>
         JNO,
 
         /// <summary>
-        /// Jump if not parity (PF=0)
+        /// Jump if not parity
         /// </summary>
         JNP,
 
         /// <summary>
-        /// Jump if not sign (SF=0)
+        /// Jump if not sign
         /// </summary>
         JNS,
 
         /// <summary>
-        /// Jump if not zero (ZF=0)
+        /// Jump if not zero
         /// </summary>
         JNZ,
 
         /// <summary>
-        /// Jump if overflow (OF=1)
+        /// Jump if overflow
         /// </summary>
         JO,
 
         /// <summary>
-        /// Jump if parity (PF=1)
+        /// Jump if parity
         /// </summary>
         JP,
 
         /// <summary>
-        /// Jump if parity even (PF=1)
+        /// Jump if parity even
         /// </summary>
         JPE,
 
         /// <summary>
-        /// Jump if parity odd (PF=0)
+        /// Jump if parity odd
         /// </summary>
         JPO,
 
         /// <summary>
-        /// Jump if sign (SF=1)
+        /// Jump if sign
         /// </summary>
         JS,
 
         /// <summary>
-        /// Jump if zero (ZF=1)
+        /// Jump if zero
         /// </summary>
         JZ,
 
@@ -383,22 +383,22 @@ namespace ObjDumper.Core
         LOOP,
 
         /// <summary>
-        /// Loop while equal (ZF=1)
+        /// Loop while equal
         /// </summary>
         LOOPE,
 
         /// <summary>
-        /// Loop while not equal (ZF=0)
+        /// Loop while not equal
         /// </summary>
         LOOPNE,
 
         /// <summary>
-        /// Loop while not zero (ZF=0)
+        /// Loop while not zero
         /// </summary>
         LOOPNZ,
 
         /// <summary>
-        /// Loop while zero (ZF=1)
+        /// Loop while zero
         /// </summary>
         LOOPZ,
 
@@ -488,12 +488,12 @@ namespace ObjDumper.Core
         PUSHF,
 
         /// <summary>
-        /// Rotate left (with carry)
+        /// Rotate left with carry
         /// </summary>
         RCL,
 
         /// <summary>
-        /// Rotate right (with carry)
+        /// Rotate right with carry
         /// </summary>
         RCR,
 
@@ -503,22 +503,22 @@ namespace ObjDumper.Core
         REP,
 
         /// <summary>
-        /// Repeat string operation while equal (ZF=1) and CX not zero
+        /// Repeat string operation while equal and CX not zero
         /// </summary>
         REPE,
 
         /// <summary>
-        /// Repeat string operation while not equal (ZF=0) and CX not zero
+        /// Repeat string operation while not equal and CX not zero
         /// </summary>
         REPNE,
 
         /// <summary>
-        /// Repeat string operation while not zero (ZF=0) and CX not zero
+        /// Repeat string operation while not zero and CX not zero
         /// </summary>
         REPNZ,
 
         /// <summary>
-        /// Repeat string operation while zero (ZF=1) and CX not zero
+        /// Repeat string operation while zero and CX not zero
         /// </summary>
         REPZ,
 
@@ -553,12 +553,12 @@ namespace ObjDumper.Core
         SAHF,
 
         /// <summary>
-        /// Shift Arithmetically left (signed shift left)
+        /// Shift Arithmetically left
         /// </summary>
         SAL,
 
         /// <summary>
-        /// Shift Arithmetically right (signed shift right)
+        /// Shift Arithmetically right
         /// </summary>
         SAR,
 
@@ -578,12 +578,12 @@ namespace ObjDumper.Core
         SCASW,
 
         /// <summary>
-        /// Shift left (unsigned shift left)
+        /// Shift left
         /// </summary>
         SHL,
 
         /// <summary>
-        /// Shift right (unsigned shift right)
+        /// Shift right
         /// </summary>
         SHR,
 
@@ -618,7 +618,7 @@ namespace ObjDumper.Core
         SUB,
 
         /// <summary>
-        /// Logical compare (And)
+        /// Logical compare / And
         /// </summary>
         TEST,
 

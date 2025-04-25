@@ -93,27 +93,27 @@ namespace ObjDumper.Core
         CMP_EQ,
 
         /// <summary>
-        /// Compare Greater Than or Equal (Signed)
+        /// Compare Greater Than or Equal
         /// </summary>
         CMP_GE,
 
         /// <summary>
-        /// Compare Greater Than (Signed)
+        /// Compare Greater Than
         /// </summary>
         CMP_GT,
 
         /// <summary>
-        /// Compare Higher (Unsigned)
+        /// Compare Higher
         /// </summary>
         CMP_HI,
 
         /// <summary>
-        /// Compare Higher or Same (Unsigned)
+        /// Compare Higher or Same
         /// </summary>
         CMP_HS,
 
         /// <summary>
-        /// Compare Plus (Positive)
+        /// Compare Plus
         /// </summary>
         CMP_PL,
 
