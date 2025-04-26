@@ -6,18 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="Iced">
-      <HintPath>..\lib\Iced.dll</HintPath>
-    </Reference>
-    <Reference Include="IcedFuzzer.Core">
-      <HintPath>..\lib\IcedFuzzer.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="IcedFuzzer">
-      <HintPath>..\lib\IcedFuzzer.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
+    <PackageReference Include="Iced" Version="1.21.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="System.Data.SQLite" Version="1.0.119" />
   </ItemGroup>

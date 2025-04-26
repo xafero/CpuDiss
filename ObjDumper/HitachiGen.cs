@@ -4,6 +4,7 @@ using System.Linq;
 using ObjDumper.Core;
 using System.Diagnostics;
 using System.IO;
+using D = System.Collections.Generic.IDictionary<string, ObjDumper.ParsedLine>;
 
 namespace ObjDumper
 {
@@ -19,7 +20,7 @@ namespace ObjDumper
         public IEnumerable<Sh3> Codes => Enum.GetValues<Sh3>().Except([Sh3.None]);
         public IEnumerable<string> CodeNames => Codes.Select(ToName);
 
-        private static void StartSh3(byte[] bytes, IDictionary<string, ParsedLine> res,
+        private static void StartSh3(byte[] bytes, D res,
             string dir, string id)
         {
             if (res.ContainsKey(id)) return;
@@ -55,7 +56,7 @@ namespace ObjDumper
             return txt;
         }
 
-        public IDictionary<string, ParsedLine> Generate()
+        public D Generate()
         {
             const string name = "sh3.json";
 
@@ -71,7 +72,7 @@ namespace ObjDumper
             return res;
         }
 
-        private void Generate(int id, IDictionary<string, ParsedLine> res)
+        private void Generate(int id, D res)
         {
             var bytes = BitConverter.GetBytes((ushort)id);
             var nr = Convert.ToHexString(bytes);
