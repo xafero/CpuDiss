@@ -81,6 +81,11 @@ namespace ObjDumper.Core
         /// Compare operands
         /// </summary>
         CMP,
+        
+        /// <summary>
+        /// Compare string
+        /// </summary>
+        CMPS,
 
         /// <summary>
         /// Compare bytes in memory
@@ -153,6 +158,11 @@ namespace ObjDumper.Core
         INC,
 
         /// <summary>
+        /// Input string
+        /// </summary>
+        INS,
+        
+        /// <summary>
         /// Input from port to string
         /// </summary>
         INSB,
@@ -167,6 +177,16 @@ namespace ObjDumper.Core
         /// </summary>
         INT,
 
+        /// <summary>
+        /// Interrupt 1
+        /// </summary>
+        INT1,
+        
+        /// <summary>
+        /// Interrupt 3
+        /// </summary>
+        INT3,
+        
         /// <summary>
         /// Call to interrupt if overflow
         /// </summary>
@@ -368,6 +388,11 @@ namespace ObjDumper.Core
         LOCK,
 
         /// <summary>
+        /// Load string
+        /// </summary>
+        LODS,
+        
+        /// <summary>
         /// Load string byte
         /// </summary>
         LODSB,
@@ -408,6 +433,11 @@ namespace ObjDumper.Core
         MOV,
 
         /// <summary>
+        /// Move string
+        /// </summary>
+        MOVS,
+        
+        /// <summary>
         /// Move byte from string to string
         /// </summary>
         MOVSB,
@@ -447,6 +477,11 @@ namespace ObjDumper.Core
         /// </summary>
         OUT,
 
+        /// <summary>
+        /// Output string
+        /// </summary>
+        OUTS,
+        
         /// <summary>
         /// Output string to port
         /// </summary>
@@ -568,6 +603,11 @@ namespace ObjDumper.Core
         SBB,
 
         /// <summary>
+        /// Compare string
+        /// </summary>
+        SCAS,
+        
+        /// <summary>
         /// Compare byte string
         /// </summary>
         SCASB,
@@ -602,6 +642,11 @@ namespace ObjDumper.Core
         /// </summary>
         STI,
 
+        /// <summary>
+        /// Store string
+        /// </summary>
+        STOS,
+        
         /// <summary>
         /// Store byte in string
         /// </summary>

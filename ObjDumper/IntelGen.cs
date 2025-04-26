@@ -17,6 +17,7 @@ namespace ObjDumper
         public string OutDir { get; }
 
         public IEnumerable<X86> Codes => Enum.GetValues<X86>().Except([X86.None]);
+        public IEnumerable<string> CodeNames => Codes.Select(ToName);
 
         private static void StartI86(byte[] bytes, IDictionary<string, ParsedLine> res,
             string dir, string id)
@@ -35,6 +36,13 @@ namespace ObjDumper
             if (itm != null)
                 res[id] = itm;
             File.Delete(name);
+        }
+
+        public static string ToName(X86 arg)
+        {
+            var txt = arg.ToString();
+            txt = txt.ToLowerInvariant();
+            return txt;
         }
     }
 }

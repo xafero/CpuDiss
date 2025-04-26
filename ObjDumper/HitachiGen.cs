@@ -17,6 +17,7 @@ namespace ObjDumper
         public string OutDir { get; }
 
         public IEnumerable<Sh3> Codes => Enum.GetValues<Sh3>().Except([Sh3.None]);
+        public IEnumerable<string> CodeNames => Codes.Select(ToName);
 
         private static void StartSh3(byte[] bytes, IDictionary<string, ParsedLine> res,
             string dir, string id)
@@ -35,6 +36,23 @@ namespace ObjDumper
             if (itm != null)
                 res[id] = itm;
             File.Delete(name);
+        }
+
+        public static string ToName(Sh3 arg)
+        {
+            var txt = arg.ToString();
+            if (txt.EndsWith('s'))
+                txt = txt[..^1] + ".S";
+            if (txt.EndsWith("_B"))
+                txt = txt[..^2] + ".B";
+            if (txt.EndsWith("_W"))
+                txt = txt[..^2] + ".W";
+            if (txt.EndsWith("_L"))
+                txt = txt[..^2] + ".L";
+            if (txt.StartsWith("CMP_"))
+                txt = txt.Replace('_', '/');
+            txt = txt.ToLowerInvariant();
+            return txt;
         }
     }
 }
