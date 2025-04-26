@@ -21,7 +21,7 @@ namespace ObjDumper
         {
             var vals = new[]
             {
-                short.MinValue, short.MaxValue
+                short.MinValue, (short)128, short.MaxValue
             };
             return vals;
         }
@@ -30,7 +30,7 @@ namespace ObjDumper
         {
             var vals = new[]
             {
-                ushort.MinValue, ushort.MaxValue
+                ushort.MinValue, (ushort)128, ushort.MaxValue
             };
             return vals;
         }
