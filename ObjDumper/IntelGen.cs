@@ -7,6 +7,9 @@ using System.IO;
 using Iced.Intel;
 using static ObjDumper.IterTool;
 using D = System.Collections.Generic.IDictionary<string, ObjDumper.ParsedLine>;
+using A8  = Iced.Intel.AssemblerRegister8;
+using A16 = Iced.Intel.AssemblerRegister16;
+using AM  = Iced.Intel.AssemblerMemoryOperand;
 
 namespace ObjDumper
 {
@@ -56,7 +59,7 @@ namespace ObjDumper
             Console.WriteLine($"Loading {res.Count} entries from '{name}'!");
 
             //for (var i = 0; i < ushort.MaxValue + 1; i++)
-              //  Generate(i, res);
+            //  Generate(i, res);
 
             GenerateExtra(res);
 
@@ -72,6 +75,7 @@ namespace ObjDumper
 
         private void Generate(byte[] bytes, D res)
         {
+            if (bytes == null) return;
             var nr = Convert.ToHexString(bytes);
             StartI86(bytes, res, OutDir, nr);
         }
@@ -85,16 +89,15 @@ namespace ObjDumper
 
         private void Do<T1>(D res, Action<Assembler, T1> action)
         {
-            object[] args;
-            var type = typeof(T1).Name;
-            switch (type)
-            {
-                case "Byte": args = IterBytes().OfType<object>().ToArray(); break;
-                case "SByte": args = IterSBytes().OfType<object>().ToArray(); break;
-                default: throw new InvalidOperationException(type);
-            }
-            foreach (var arg in args)
+            foreach (var arg in IterObject<T1>())
                 Do(res, a => action.DynamicInvoke(a, arg));
+        }
+
+        private void Do<T1, T2>(D res, Action<Assembler, T1, T2> action)
+        {
+            foreach (var arg1 in IterObject<T1>())
+            foreach (var arg2 in IterObject<T2>())
+                Do(res, a => action.DynamicInvoke(a, arg1, arg2));
         }
 
         private void GenerateExtra(D r)
@@ -102,136 +105,138 @@ namespace ObjDumper
             Do(r, a => a.aaa());
             Do<byte>(r, (a, x) => a.aad(x));
             Do<sbyte>(r, (a, x) => a.aad(x));
-            Do<byte>(r, (a,x) => a.aam(x));
-            Do<sbyte>(r, (a,x) => a.aam(x));
+            Do<byte>(r, (a, x) => a.aam(x));
+            Do<sbyte>(r, (a, x) => a.aam(x));
             Do(r, a => a.aas());
-            
-            
-            
-            
-            // Do(r, a => a.adc());
-            // Do(r, a => a.add());
-            // Do(r, a => a.and());
-            // Do(r, a => a.bound());
-            // Do(r, a => a.call());
-            // Do(r, a => a.cbw());
-            // Do(r, a => a.clc());
-            // Do(r, a => a.cld());
-            // Do(r, a => a.cli());
-            // Do(r, a => a.cmc());
-            // Do(r, a => a.cmp());
-            // Do(r, a => a.cmpsb());
-            // Do(r, a => a.cmpsw());
-            // Do(r, a => a.cwd());
-            // Do(r, a => a.daa());
-            // Do(r, a => a.das());
-            // Do(r, a => a.dec());
-            // Do(r, a => a.div());
-            // Do(r, a => a.enter());
-            // Do(r, a => a.hlt());
-            // Do(r, a => a.idiv());
-            // Do(r, a => a.imul());
-            // Do(r, a => a.@in());
-            // Do(r, a => a.inc());
-            // Do(r, a => a.insb());
-            // Do(r, a => a.insw());
-            // Do(r, a => a.@int());
-            // Do(r, a => a.int1());
-            // Do(r, a => a.int3());
-            // Do(r, a => a.into());
-            // Do(r, a => a.iret());
-            // Do(r, a => a.ja());
-            // Do(r, a => a.jae());
-            // Do(r, a => a.jb());
-            // Do(r, a => a.jbe());
-            // Do(r, a => a.jc());
-            // Do(r, a => a.jcxz());
-            // Do(r, a => a.je());
-            // Do(r, a => a.jg());
-            // Do(r, a => a.jge());
-            // Do(r, a => a.jl());
-            // Do(r, a => a.jle());
-            // Do(r, a => a.jmp());
-            // Do(r, a => a.jna());
-            // Do(r, a => a.jnae());
-            // Do(r, a => a.jnb());
-            // Do(r, a => a.jnbe());
-            // Do(r, a => a.jnc());
-            // Do(r, a => a.jne());
-            // Do(r, a => a.jng());
-            // Do(r, a => a.jnge());
-            // Do(r, a => a.jnl());
-            // Do(r, a => a.jnle());
-            // Do(r, a => a.jno());
-            // Do(r, a => a.jnp());
-            // Do(r, a => a.jns());
-            // Do(r, a => a.jnz());
-            // Do(r, a => a.jo());
-            // Do(r, a => a.jp());
-            // Do(r, a => a.jpe());
-            // Do(r, a => a.jpo());
-            // Do(r, a => a.js());
-            // Do(r, a => a.jz());
-            // Do(r, a => a.lahf());
-            // Do(r, a => a.lds());
-            // Do(r, a => a.lea());
-            // Do(r, a => a.leave());
-            // Do(r, a => a.les());
-            // Do(r, a => a.@lock());
-            // Do(r, a => a.lodsb());
-            // Do(r, a => a.lodsw());
-            // Do(r, a => a.loop());
-            // Do(r, a => a.loope());
-            // Do(r, a => a.loopne());
-            // Do(r, a => a.loopnz());
-            // Do(r, a => a.loopz());
-            // Do(r, a => a.mov());
-            // Do(r, a => a.movsb());
-            // Do(r, a => a.movsw());
-            // Do(r, a => a.mul());
-            // Do(r, a => a.neg());
-            // Do(r, a => a.nop());
-            // Do(r, a => a.not());
-            // Do(r, a => a.or());
-            // Do(r, a => a.@out());
-            // Do(r, a => a.outsb());
-            // Do(r, a => a.outsw());
-            // Do(r, a => a.pop());
-            // Do(r, a => a.popa());
-            // Do(r, a => a.popf());
-            // Do(r, a => a.push());
-            // Do(r, a => a.pusha());
-            // Do(r, a => a.pushf());
-            // Do(r, a => a.rcl());
-            // Do(r, a => a.rcr());
-            // Do(r, a => a.rep());
-            // Do(r, a => a.repe());
-            // Do(r, a => a.repne());
-            // Do(r, a => a.repnz());
-            // Do(r, a => a.repz());
-            // Do(r, a => a.ret());
-            // Do(r, a => a.retf());
-            // Do(r, a => a.rol());
-            // Do(r, a => a.ror());
-            // Do(r, a => a.sahf());
-            // Do(r, a => a.sal());
-            // Do(r, a => a.sar());
-            // Do(r, a => a.sbb());
-            // Do(r, a => a.scasb());
-            // Do(r, a => a.scasw());
-            // Do(r, a => a.shl());
-            // Do(r, a => a.shr());
-            // Do(r, a => a.stc());
-            // Do(r, a => a.std());
-            // Do(r, a => a.sti());
-            // Do(r, a => a.stosb());
-            // Do(r, a => a.stosw());
-            // Do(r, a => a.sub());
-            // Do(r, a => a.test());
-            // Do(r, a => a.wait());
-            // Do(r, a => a.xchg());
-            // Do(r, a => a.xlatb());
-            // Do(r, a => a.xor());
+            Do<A8, A8>(r, (a, x, y) => a.adc(x, y));
+            Do<A8, A8>(r, (a, x, y) => a.add(x, y));
+            Do<A8, A8>(r, (a, x, y) => a.and(x, y));
+            Do<A16, AM>(r, (a, x, y) => a.bound(x, y));
+            Do<A16>(r, (a, x) => a.call(x));
+            Do(r, a => a.cbw());
+            Do(r, a => a.clc());
+            Do(r, a => a.cld());
+            Do(r, a => a.cli());
+            Do(r, a => a.cmc());
+            Do<A8, byte>(r, (a, x, y) => a.cmp(x, y));
+            Do<A8, sbyte>(r, (a, x, y) => a.cmp(x, y));
+            Do(r, a => a.cmpsb());
+            Do(r, a => a.cmpsw());
+            Do(r, a => a.cwd());
+            Do(r, a => a.daa());
+            Do(r, a => a.das());
+            Do<A8>(r, (a, x) => a.dec(x));
+            Do<A8>(r, (a, x) => a.div(x));
+            Do<short, sbyte>(r, (a, x, y) => a.enter(x, y));
+            Do<ushort, byte>(r, (a, x, y) => a.enter(x, y));
+            Do(r, a => a.hlt());
+            Do<A8>(r, (a, x) => a.idiv(x));
+            Do<A8>(r, (a, x) => a.imul(x));
+            Do<A8, byte>(r, (a, x, y) => a.@in(x, y));
+            Do<A8, sbyte>(r, (a, x, y) => a.@in(x, y));
+            Do<A8>(r, (a, x) => a.inc(x));
+            Do(r, a => a.insb());
+            Do(r, a => a.insw());
+            Do<byte>(r, (a, x) => a.@int(x));
+            Do<sbyte>(r, (a, x) => a.@int(x));
+            Do(r, a => a.int1());
+            Do(r, a => a.int3());
+            Do(r, a => a.into());
+            Do(r, a => a.iret());
+            Do<ulong>(r, (a, x) => a.ja(x));
+            Do<ulong>(r, (a, x) => a.jae(x));
+            Do<ulong>(r, (a, x) => a.jb(x));
+            Do<ulong>(r, (a, x) => a.jbe(x));
+            Do<ulong>(r, (a, x) => a.jc(x));
+            Do<ulong>(r, (a, x) => a.jcxz(x));
+            Do<ulong>(r, (a, x) => a.je(x));
+            Do<ulong>(r, (a, x) => a.jg(x));
+            Do<ulong>(r, (a, x) => a.jge(x));
+            Do<ulong>(r, (a, x) => a.jl(x));
+            Do<ulong>(r, (a, x) => a.jle(x));
+            Do<ulong>(r, (a, x) => a.jmp(x));
+            Do<ulong>(r, (a, x) => a.jna(x));
+            Do<ulong>(r, (a, x) => a.jnae(x));
+            Do<ulong>(r, (a, x) => a.jnb(x));
+            Do<ulong>(r, (a, x) => a.jnbe(x));
+            Do<ulong>(r, (a, x) => a.jnc(x));
+            Do<ulong>(r, (a, x) => a.jne(x));
+            Do<ulong>(r, (a, x) => a.jng(x));
+            Do<ulong>(r, (a, x) => a.jnge(x));
+            Do<ulong>(r, (a, x) => a.jnl(x));
+            Do<ulong>(r, (a, x) => a.jnle(x));
+            Do<ulong>(r, (a, x) => a.jno(x));
+            Do<ulong>(r, (a, x) => a.jnp(x));
+            Do<ulong>(r, (a, x) => a.jns(x));
+            Do<ulong>(r, (a, x) => a.jnz(x));
+            Do<ulong>(r, (a, x) => a.jo(x));
+            Do<ulong>(r, (a, x) => a.jp(x));
+            Do<ulong>(r, (a, x) => a.jpe(x));
+            Do<ulong>(r, (a, x) => a.jpo(x));
+            Do<ulong>(r, (a, x) => a.js(x));
+            Do<ulong>(r, (a, x) => a.jz(x));
+            Do(r, a => a.lahf());
+            Do<A16, AM>(r, (a, x, y) => a.lds(x, y));
+            Do<A16, AM>(r, (a, x, y) => a.lea(x, y));
+            Do(r, a => a.leave());
+            Do<A16, AM>(r, (a, x, y) => a.les(x, y));
+            // TODO Do(r, a => a.@lock);
+            Do(r, a => a.lodsb());
+            Do(r, a => a.lodsw());
+            Do<ulong>(r, (a, x) => a.loop(x));
+            Do<ulong>(r, (a, x) => a.loope(x));
+            Do<ulong>(r, (a, x) => a.loopne(x));
+            Do<ulong>(r, (a, x) => a.loopnz(x));
+            Do<ulong>(r, (a, x) => a.loopz(x));
+            Do<A8, A8>(r, (a, x, y) => a.mov(x, y));
+            Do(r, a => a.movsb());
+            Do(r, a => a.movsw());
+            Do<A8>(r, (a, x) => a.mul(x));
+            Do<A16>(r, (a, x) => a.mul(x));
+            Do<A8>(r, (a, x) => a.neg(x));
+            Do(r, a => a.nop());
+            Do<A8>(r, (a, x) => a.not(x));
+            Do<A8, sbyte>(r, (a, x, y) => a.or(x, y));
+            Do<A16, A8>(r, (a, x, y) => a.@out(x, y));
+            Do<byte, A8>(r, (a, x, y) => a.@out(x, y));
+            Do(r, a => a.outsb());
+            Do(r, a => a.outsw());
+            Do<A16>(r, (a, x) => a.pop(x));
+            Do(r, a => a.popa());
+            Do(r, a => a.popf());
+            Do<A16>(r, (a, x) => a.push(x));
+            Do(r, a => a.pusha());
+            Do(r, a => a.pushf());
+            Do<A8, byte>(r, (a, x, y) => a.rcl(x, y));
+            Do<A8, byte>(r, (a, x, y) => a.rcr(x, y));
+            // TODO Do(r, a => a.rep());
+            // TODO Do(r, a => a.repe());
+            // TODO Do(r, a => a.repne());
+            // TODO Do(r, a => a.repnz());
+            // TODO Do(r, a => a.repz());
+            Do(r, a => a.ret());
+            Do(r, a => a.retf());
+            Do<A8, byte>(r, (a, x, y) => a.rol(x, y));
+            Do<A8, byte>(r, (a, x, y) => a.ror(x, y));
+            Do(r, a => a.sahf());
+            Do<A8, byte>(r, (a, x, y) => a.sal(x, y));
+            Do<A8, byte>(r, (a, x, y) => a.sar(x, y));
+            Do<A8, sbyte>(r, (a, x, y) => a.sbb(x, y));
+            Do(r, a => a.scasb());
+            Do(r, a => a.scasw());
+            Do<A8, byte>(r, (a, x, y) => a.shl(x, y));
+            Do<A8, byte>(r, (a, x, y) => a.shr(x, y));
+            Do(r, a => a.stc());
+            Do(r, a => a.std());
+            Do(r, a => a.sti());
+            Do(r, a => a.stosb());
+            Do(r, a => a.stosw());
+            Do<A8, sbyte>(r, (a, x, y) => a.sub(x, y));
+            Do<A8, byte>(r, (a, x, y) => a.test(x, y));
+            Do(r, a => a.wait());
+            Do<A8, A8>(r, (a, x, y) => a.xchg(x, y));
+            Do(r, a => a.xlatb());
+            Do<A8, sbyte>(r, (a, x, y) => a.xor(x, y));
         }
     }
 }

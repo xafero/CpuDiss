@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using Iced.Intel;
 
@@ -14,8 +15,15 @@ namespace ObjDumper
         {
             const ulong ip = 0x0;
             using var stream = new MemoryStream();
-            c.Assemble(new StreamCodeWriter(stream), ip);
-            return stream.ToArray();
+            try
+            {
+                c.Assemble(new StreamCodeWriter(stream), ip);
+                return stream.ToArray();
+            }
+            catch (InvalidOperationException)
+            {
+                return null;
+            }
         }
     }
 }
