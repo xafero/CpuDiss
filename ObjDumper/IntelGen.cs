@@ -180,7 +180,7 @@ namespace ObjDumper
             Do<A16, AM>(r, (a, x, y) => a.lea(x, y));
             Do(r, a => a.leave());
             Do<A16, AM>(r, (a, x, y) => a.les(x, y));
-            // TODO Do(r, a => a.@lock);
+            Do<A16>(r, (a, x) => a.@lock.inc(x));
             Do(r, a => a.lodsb());
             Do(r, a => a.lodsw());
             Do<ulong>(r, (a, x) => a.loop(x));
@@ -209,11 +209,11 @@ namespace ObjDumper
             Do(r, a => a.pushf());
             Do<A8, byte>(r, (a, x, y) => a.rcl(x, y));
             Do<A8, byte>(r, (a, x, y) => a.rcr(x, y));
-            // TODO Do(r, a => a.rep());
-            // TODO Do(r, a => a.repe());
-            // TODO Do(r, a => a.repne());
-            // TODO Do(r, a => a.repnz());
-            // TODO Do(r, a => a.repz());
+            Do(r, a => a.rep.movsb());
+            Do(r, a => a.repe.cmpsb());
+            Do(r, a => a.repne.scasb());
+            Do(r, a => a.repnz.movsb());
+            Do(r, a => a.repz.cmpsb());
             Do(r, a => a.ret());
             Do(r, a => a.retf());
             Do<A8, byte>(r, (a, x, y) => a.rol(x, y));
