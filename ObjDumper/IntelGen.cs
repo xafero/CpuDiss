@@ -44,5 +44,11 @@ namespace ObjDumper
             txt = txt.ToLowerInvariant();
             return txt;
         }
+
+        public void Generate()
+        {
+
+            
+        }
     }
 }

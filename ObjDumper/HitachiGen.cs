@@ -54,5 +54,26 @@ namespace ObjDumper
             txt = txt.ToLowerInvariant();
             return txt;
         }
+
+        public void Generate()
+        {
+            const string name = "sh3.json";
+
+            var res = JsonTool.Load<SortedDictionary<string, ParsedLine>>(OutDir, name);
+            Console.WriteLine($"Loading {res.Count} entries from '{name}'!");
+
+            for (var i = 0; i < ushort.MaxValue + 1; i++)
+                Generate(i, res);
+
+            Console.WriteLine($"Saving {res.Count} entries for '{name}'!");
+            JsonTool.Save(OutDir, name, res);
+        }
+
+        private void Generate(int id, IDictionary<string, ParsedLine> res)
+        {
+            var bytes = BitConverter.GetBytes((ushort)id);
+            var nr = Convert.ToHexString(bytes);
+            StartSh3(bytes, res, OutDir, nr);
+        }
     }
 }
