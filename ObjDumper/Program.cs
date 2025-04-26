@@ -1,4 +1,4 @@
-using System;
+using System.Linq;
 
 namespace ObjDumper
 {
@@ -9,17 +9,16 @@ namespace ObjDumper
             var outDir = DirTool.CreateDir("out");
 
             var x86Gen = new IntelGen(outDir);
-            Console.WriteLine(" * " + string.Join(", ", x86Gen.Codes));
-            Console.WriteLine(" * " + string.Join(", ", x86Gen.CodeNames));
-            x86Gen.Generate();
-
-            Console.WriteLine();
+            var resI = x86Gen.Generate();
+            var x86Allow = x86Gen.CodeNames.ToArray();
+            var linI = SqlMan.Create(resI, x86Allow, outDir, "i86.sql");
 
             var sh3Gen = new HitachiGen(outDir);
-            Console.WriteLine(" * " + string.Join(", ", sh3Gen.Codes));
-            Console.WriteLine(" * " + string.Join(", ", sh3Gen.CodeNames));
-            sh3Gen.Generate();
+            var resH = sh3Gen.Generate();
+            var sh3Allow = sh3Gen.CodeNames.ToArray();
+            var linH = SqlMan.Create(resH, sh3Allow, outDir, "sh3.sql");
 
+            SqlLite.WriteOut([linI, linH], outDir, "asm.db3");
         }
     }
 }

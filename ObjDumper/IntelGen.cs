@@ -51,7 +51,7 @@ namespace ObjDumper
             return txt;
         }
 
-        public void Generate()
+        public IDictionary<string, ParsedLine> Generate()
         {
             const string name = "i86.json";
 
@@ -65,6 +65,8 @@ namespace ObjDumper
 
             Console.WriteLine($"Saving {res.Count} entries for '{name}'!");
             JsonTool.Save(OutDir, name, res);
+
+            return res;
         }
 
         private void Generate(int id, D res)
