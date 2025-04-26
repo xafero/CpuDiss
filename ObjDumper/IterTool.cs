@@ -76,7 +76,7 @@ namespace ObjDumper
         {
             var regs = new[]
             {
-                ax, bx, cx, dx
+                ax, bx, cx, dx, sp, bp, si, di
             };
             return regs;
         }
