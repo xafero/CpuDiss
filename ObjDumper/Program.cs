@@ -15,10 +15,10 @@ namespace ObjDumper
 
             Console.WriteLine();
 
-            var sh3Gen = new HitachiGen(outDir);
-            Console.WriteLine(" * " + string.Join(", ", sh3Gen.Codes));
-            Console.WriteLine(" * " + string.Join(", ", sh3Gen.CodeNames));
-            sh3Gen.Generate();
+            // var sh3Gen = new HitachiGen(outDir);
+            // Console.WriteLine(" * " + string.Join(", ", sh3Gen.Codes));
+            // Console.WriteLine(" * " + string.Join(", ", sh3Gen.CodeNames));
+            // sh3Gen.Generate();
 
         }
     }
