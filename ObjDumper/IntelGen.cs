@@ -4,6 +4,8 @@ using System.Linq;
 using ObjDumper.Core;
 using System.Diagnostics;
 using System.IO;
+using Iced.Intel;
+using D = System.Collections.Generic.IDictionary<string, ObjDumper.ParsedLine>;
 
 namespace ObjDumper
 {
@@ -19,7 +21,7 @@ namespace ObjDumper
         public IEnumerable<X86> Codes => Enum.GetValues<X86>().Except([X86.None]);
         public IEnumerable<string> CodeNames => Codes.Select(ToName);
 
-        private static void StartI86(byte[] bytes, IDictionary<string, ParsedLine> res,
+        private static void StartI86(byte[] bytes, D res,
             string dir, string id)
         {
             if (res.ContainsKey(id)) return;
@@ -55,15 +57,34 @@ namespace ObjDumper
             for (var i = 0; i < ushort.MaxValue + 1; i++)
                 Generate(i, res);
 
+            GenerateExtra(res);
+
             Console.WriteLine($"Saving {res.Count} entries for '{name}'!");
             JsonTool.Save(OutDir, name, res);
         }
 
-        private void Generate(int id, IDictionary<string, ParsedLine> res)
+        private void Generate(int id, D res)
         {
             var bytes = BitConverter.GetBytes((ushort)id);
+            Generate(bytes, res);
+        }
+
+        private void Generate(byte[] bytes, D res)
+        {
             var nr = Convert.ToHexString(bytes);
             StartI86(bytes, res, OutDir, nr);
+        }
+
+        private void Do(D res, Action<Assembler> action)
+        {
+            var asm = IntelTool.CreateAss();
+            action(asm);
+            Generate(asm.GetBytes(), res);
+        }
+
+        private void GenerateExtra(D r)
+        {
+            Do(r, a => a.daa());
         }
     }
 }
