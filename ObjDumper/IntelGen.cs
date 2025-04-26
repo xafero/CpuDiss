@@ -191,6 +191,11 @@ namespace ObjDumper
             Do<ulong>(r, (a, x) => a.loopnz(x));
             Do<ulong>(r, (a, x) => a.loopz(x));
             Do<A8, A8>(r, (a, x, y) => a.mov(x, y));
+            Do<A8, AM>(r, (a, x, y) => a.mov(x, y));
+            Do<A8, byte>(r, (a, x, y) => a.mov(x, y));
+            Do<A16, A16>(r, (a, x, y) => a.mov(x, y));
+            Do<A16, AM>(r, (a, x, y) => a.mov(x, y));
+            Do<A16, short>(r, (a, x, y) => a.mov(x, y));
             Do(r, a => a.movsb());
             Do(r, a => a.movsw());
             Do<A8>(r, (a, x) => a.mul(x));
