@@ -1,4 +1,4 @@
-using System.IO;
+using System;
 
 namespace ObjDumper
 {
@@ -6,15 +6,15 @@ namespace ObjDumper
     {
         private static void Main(string[] args)
         {
-            var outDir = Directory.CreateDirectory("out").FullName;
+            var outDir = DirTool.CreateDir("out");
 
-            var resI = IntelGen.Generate(outDir);
-            var linI = SqlMan.Create(resI, SqlMan.x86Allow, outDir, "i86.sql");
+            var x86Gen = new IntelGen(outDir);
+            Console.WriteLine(string.Join(", ", x86Gen.Codes));
 
-            var resH = HitachiGen.Generate(outDir);
-            var linH = SqlMan.Create(resH, SqlMan.sh3Allow, outDir, "sh3.sql");
+            Console.WriteLine();
 
-            SqlLite.WriteOut([linI, linH], outDir, "asm.db3");
+            var sh3Gen = new HitachiGen(outDir);
+            Console.WriteLine(string.Join(", ", sh3Gen.Codes));
         }
     }
 }

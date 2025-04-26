@@ -5,9 +5,9 @@ using System.Linq;
 
 namespace ObjDumper
 {
-    internal static class ProcTool
+    public static class ProcTool
     {
-        public static ParsedLine StartAndGet(ProcessStartInfo info)
+        public static ParsedLine StartAndGet(this ProcessStartInfo info)
         {
             info.RedirectStandardOutput = true;
             info.RedirectStandardError = true;
