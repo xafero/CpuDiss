@@ -31,7 +31,7 @@ namespace ObjDumper
             };
             if (!File.Exists(name))
                 return;
-            var itm = ObjDumper.ProcTool.StartAndGet(info);
+            var itm = info.StartAndGet();
             if (itm != null)
                 res[id] = itm;
             File.Delete(name);
